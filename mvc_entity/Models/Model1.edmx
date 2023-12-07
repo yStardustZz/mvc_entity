@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="webappcarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_jogador">
+          <Key>
+            <PropertyRef Name="id_jogador" />
+          </Key>
+          <Property Name="id_jogador" Type="int" Nullable="false" />
+          <Property Name="time_jogador" Type="int" Nullable="false" />
+          <Property Name="nome_jogador" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_times">
+          <Key>
+            <PropertyRef Name="id_time" />
+          </Key>
+          <Property Name="id_time" Type="int" Nullable="false" />
+          <Property Name="nome_time" Type="nvarchar" MaxLength="50" />
+          <Property Name="qtd_jogadores" Type="int" />
+        </EntityType>
+        <Association Name="FK_tb_jogador_tb_times">
+          <End Role="tb_times" Type="Self.tb_times" Multiplicity="1" />
+          <End Role="tb_jogador" Type="Self.tb_jogador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_times">
+              <PropertyRef Name="id_time" />
+            </Principal>
+            <Dependent Role="tb_jogador">
+              <PropertyRef Name="time_jogador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="webappcarModelStoreContainer">
+          <EntitySet Name="tb_jogador" EntityType="Self.tb_jogador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_times" EntityType="Self.tb_times" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tb_jogador_tb_times" Association="Self.FK_tb_jogador_tb_times">
+            <End Role="tb_times" EntitySet="tb_times" />
+            <End Role="tb_jogador" EntitySet="tb_jogador" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="webappcarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_jogador">
+          <Key>
+            <PropertyRef Name="id_jogador" />
+          </Key>
+          <Property Name="id_jogador" Type="Int32" Nullable="false" />
+          <Property Name="time_jogador" Type="Int32" Nullable="false" />
+          <Property Name="nome_jogador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tb_times" Relationship="Self.FK_tb_jogador_tb_times" FromRole="tb_jogador" ToRole="tb_times" />
+        </EntityType>
+        <EntityType Name="tb_times">
+          <Key>
+            <PropertyRef Name="id_time" />
+          </Key>
+          <Property Name="id_time" Type="Int32" Nullable="false" />
+          <Property Name="nome_time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="qtd_jogadores" Type="Int32" />
+          <NavigationProperty Name="tb_jogador" Relationship="Self.FK_tb_jogador_tb_times" FromRole="tb_times" ToRole="tb_jogador" />
+        </EntityType>
+        <Association Name="FK_tb_jogador_tb_times">
+          <End Role="tb_times" Type="Self.tb_times" Multiplicity="1" />
+          <End Role="tb_jogador" Type="Self.tb_jogador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_times">
+              <PropertyRef Name="id_time" />
+            </Principal>
+            <Dependent Role="tb_jogador">
+              <PropertyRef Name="time_jogador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="webappcarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_jogador" EntityType="Self.tb_jogador" />
+          <EntitySet Name="tb_times" EntityType="Self.tb_times" />
+          <AssociationSet Name="FK_tb_jogador_tb_times" Association="Self.FK_tb_jogador_tb_times">
+            <End Role="tb_times" EntitySet="tb_times" />
+            <End Role="tb_jogador" EntitySet="tb_jogador" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="webappcarModelStoreContainer" CdmEntityContainer="webappcarEntities">
+          <EntitySetMapping Name="tb_jogador">
+            <EntityTypeMapping TypeName="webappcarModel.tb_jogador">
+              <MappingFragment StoreEntitySet="tb_jogador">
+                <ScalarProperty Name="id_jogador" ColumnName="id_jogador" />
+                <ScalarProperty Name="time_jogador" ColumnName="time_jogador" />
+                <ScalarProperty Name="nome_jogador" ColumnName="nome_jogador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_times">
+            <EntityTypeMapping TypeName="webappcarModel.tb_times">
+              <MappingFragment StoreEntitySet="tb_times">
+                <ScalarProperty Name="id_time" ColumnName="id_time" />
+                <ScalarProperty Name="nome_time" ColumnName="nome_time" />
+                <ScalarProperty Name="qtd_jogadores" ColumnName="qtd_jogadores" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
